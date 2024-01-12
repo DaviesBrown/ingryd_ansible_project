@@ -5,13 +5,9 @@
   tasks:
 
 # Ubuntu plays
-  - name: Update Repository Index(Ubuntu)
+  - name: Update repo and Install apache and php packages(Ubuntu)
     apt:
       update_cache: yes
-    when: ansible_distribution == "Ubuntu"
-
-  - name: Install apache and php packages(Ubuntu)
-    apt:
       name:
         - apache2
         - libapache2-mod-php
@@ -19,13 +15,9 @@
     when: ansible_distribution == "Ubuntu"
 
 # Rocky plays
-  - name: Update Repository Index(Rocky)
+  - name: Update repo and Install apache and php packages(Rocky)
     dnf:
       update_cache: yes
-    when: ansible_distribution == "Rocky"
-
-  - name: Install apache and php packages(Rocky)
-    dnf:
       name:
         - httpd
         - php
