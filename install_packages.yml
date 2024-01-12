@@ -3,37 +3,31 @@
 - hosts: all
   become: true
   tasks:
+
+# Ubuntu plays
   - name: Update Repository Index(Ubuntu)
     apt:
       update_cache: yes
     when: ansible_distribution == "Ubuntu"
 
-  - name: Install apache2 package(Ubuntu)
+  - name: Install apache and php packages(Ubuntu)
     apt:
-      name: apache2
+      name:
+        - apache2
+        - libapache2-mod-php
       state: latest
     when: ansible_distribution == "Ubuntu"
 
-  - name: Add php support for Apache(Ubuntu)
-    apt:
-      name: libapache2-mod-php
-      state: latest
-    when: ansible_distribution == "Ubuntu"
-
-
+# Rocky plays
   - name: Update Repository Index(Rocky)
     dnf:
       update_cache: yes
     when: ansible_distribution == "Rocky"
 
-  - name: Install apache2 package(Rocky)
+  - name: Install apache and php packages(Rocky)
     dnf:
-      name: httpd
-      state: latest
-    when: ansible_distribution == "Rocky"
-
-  - name: Add php support for Apache(Rocky)
-    dnf:
-      name: php
+      name:
+        - httpd
+        - php
       state: latest
     when: ansible_distribution == "Rocky"
