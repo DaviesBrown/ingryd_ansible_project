@@ -1,0 +1,25 @@
+---
+# Play for create sudo user without password on each server
+- hosts: all
+  become: true
+  tasks:
+  - name: Create oga user
+    tags: sudoer
+    user:
+      name: oga
+      group: root
+
+  - name: Add ssh key for oga to all servers
+    tags: sudoer
+    authorized_key:
+      user: oga
+      key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF8Ik9tY2asB0SPive7nJGk7ek+MbUgWzILw05yNfvEA ansible"
+
+  - name: Add a sudoer file for oga
+    tags: sudoer
+    copy:
+      src: sudoer_oga
+      dest: /etc/sudoers.d/oga
+      owner: root
+      group: root
+      mode: 0440
