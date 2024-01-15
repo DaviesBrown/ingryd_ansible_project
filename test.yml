@@ -1,0 +1,12 @@
+---
+
+- hosts: all
+  become: true
+  tasks:
+  - name: copy file
+    copy:
+      src: index.html
+      dest: /home/brown/index.html
+      owner: root
+      group: root
+      mode: 0644
