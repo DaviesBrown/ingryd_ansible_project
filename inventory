@@ -1,8 +1,11 @@
-[web_server]
+[web_servers]
+node1
+node2
+[db_servers]
+node2
 node1
 
-[db_server]
-node2
-
-[file_server]
+[file_servers]
 #192.168.56.40
+192.168.56.20
+192.168.56.30
