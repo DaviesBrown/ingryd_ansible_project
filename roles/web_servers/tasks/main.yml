@@ -1,0 +1,37 @@
+# Ubuntu plays
+- name: Update repo and Install apache and php packages(Ubuntu)
+  tags: apache,ubuntu,php,update
+  apt:
+    update_cache: yes
+    name:
+      - apache2
+      - libapache2-mod-php
+    state: latest
+  when: ansible_distribution == "Ubuntu"
+
+# Rocky plays
+- name: Update repo and Install apache and php packages(Rocky)
+  tags: apache,php,rocky,update
+  dnf:
+    update_cache: yes
+    name:
+      - httpd
+      - php
+    state: latest
+  when: ansible_distribution == "Rocky"
+
+- name: Change email address for admin (Rocky)
+  tags: apache, httpd,rocky
+  lineinfile:
+    path: /etc/httpd/conf/httpd.conf
+    regexp: '^ServerAdmin'
+    line: ServerAdmin nwosudavid@gmail.com
+  when: ansible_distribution == "Rocky"
+  register: httpd
+
+- name: Restart httpd(Rocky)
+  tags: apache,rocky,httpd
+  service:
+    name: httpd
+    state: restarted
+  when: httpd.changed
